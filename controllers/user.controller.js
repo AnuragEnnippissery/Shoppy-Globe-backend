@@ -28,7 +28,7 @@ export async function Login(req,res){
     }
     else{
         //res.status(200).json({"message":"welcome"})
-        let accessToken=jwt.sign({ id: user._id, username: user.username },"secretKey");
+        let accessToken=jwt.sign({ id: user._id, username: user.username },"secretKey",{expiresIn:"1d"});
         res.status(200).json({token:accessToken,"message":"welcome",id:user._id});
     }
 }

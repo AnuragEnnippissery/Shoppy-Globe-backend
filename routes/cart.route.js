@@ -7,5 +7,5 @@ export default function CartRoutes(app){
     app.post("/api/cart/add",AuthenticateUser,addToCart);
     app.post("/api/cart/decrease",AuthenticateUser,decreaseFromCart);
     app.delete("/api/cart/remove/:productId",AuthenticateUser,removeFromCart);
-    app.get("/api/cart/:userId",getCart);
+    app.get("/api/cart/:userId",AuthenticateUser,getCart);
 }
