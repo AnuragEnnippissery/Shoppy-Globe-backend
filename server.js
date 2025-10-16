@@ -14,14 +14,15 @@ Routes(app)
 userRoute(app)
 CartRoutes(app)
 
-mongoose.connect("mongodb+srv://anuragramesh608:c8wnN0KZ1Zzh4PoJ@cluster0.pdtmc7s.mongodb.net/")
+mongoose.connect("mongodb+srv://anuragramesh608:c8wnN0KZ1Zzh4PoJ@cluster0.pdtmc7s.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0/")
+//mongodb+srv://anuragramesh608:c8wnN0KZ1Zzh4PoJ@cluster0.pdtmc7s.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 const db=mongoose.connection
 
 
 db.on("open",()=>{
     console.log("successfull")
 })
-db.off("error",()=>{
+db.on("error",()=>{
     console.log("not successfull")
 })
 app.listen(3000,()=>{
