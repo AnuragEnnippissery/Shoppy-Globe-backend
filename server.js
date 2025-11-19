@@ -1,30 +1,31 @@
-import express from "express"
-import mongoose from "mongoose"
-import cors from "cors"
-import { Routes } from "./routes/product.route.js"
-import userRoute from "./routes/user.route.js"
-import CartRoutes from "./routes/cart.route.js"
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
+import { Routes } from "./routes/product.route.js";
+import userRoute from "./routes/user.route.js";
+import CartRoutes from "./routes/cart.route.js";
 
+const app = express();
 
-const app=express()
-app.use(express.json())
-app.use(cors())
+// CORS (Allow all for now)
+app.use(cors());
+app.use(express.json());
 
-Routes(app)
-userRoute(app)
-CartRoutes(app)
+// Routes
+Routes(app);
+userRoute(app);
+CartRoutes(app);
 
-mongoose.connect("mongodb+srv://anuragramesh608:c8wnN0KZ1Zzh4PoJ@cluster0.pdtmc7s.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0/")
-//mongodb+srv://anuragramesh608:c8wnN0KZ1Zzh4PoJ@cluster0.pdtmc7s.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-const db=mongoose.connection
+// Fix MongoDB connection string (removed extra /)
+mongoose.connect("mongodb+srv://anuragramesh608:c8wnN0KZ1Zzh4PoJ@cluster0.pdtmc7s.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
 
+// MongoDB events
+mongoose.connection.on("open", () => console.log("MongoDB Connected"));
+mongoose.connection.on("error", (err) => console.error("MongoDB Error:", err));
 
-db.on("open",()=>{
-    console.log("successfull")
-})
-db.on("error",()=>{
-    console.log("not successfull")
-})
-app.listen(3000,()=>{
-    console.log("server is running")
-})
+// FIX FOR RENDER !! (Use correct PORT)
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
